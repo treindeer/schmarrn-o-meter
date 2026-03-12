@@ -11,7 +11,7 @@ CHANNEL_ID = os.getenv("TELEGRAM_CHANNEL_ID")
 API_URL = "https://akafoe.studylife.org/api/meal-plans/today?canteen_id=a0f40678-5e86-4ae4-9ff1-ae1e9e25934b"
 
 MENSA_URL = "https://www.akafoe.de/essen/mensen-und-cafeterien/speiseplan/a0f40678-5e86-4ae4-9ff1-ae1e9e25934b"
-SUCHWORT = "basmatireis"
+SUCHWORT = "kaiserschmarrn"
 
 
 def check_mensa_for_schmarrn():
