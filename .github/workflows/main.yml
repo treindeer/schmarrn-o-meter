@@ -1,0 +1,29 @@
+name: Kaiserschmarrn Alarm
+
+on:
+  schedule:
+    # Führt das Skript jeden Montag bis Freitag um 06:00 UTC aus (entspricht ca. 07:00 / 08:00 Uhr in Deutschland)
+    - cron: '0 6 * * 1-5'
+  workflow_dispatch: # Das ist ein magischer Schalter, mit dem du das Skript zum Testen manuell per Knopfdruck starten kannst!
+
+jobs:
+  check-mensa:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Lade Code herunter
+        uses: actions/checkout@v4
+        
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Abhängigkeiten installieren
+        run: pip install -r requirements.txt
+          
+      - name: Schmarrn-Check ausführen
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+        run: python schmarrn_bot.py
