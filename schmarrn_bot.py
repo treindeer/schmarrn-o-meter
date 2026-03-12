@@ -11,7 +11,7 @@ CHANNEL_ID = os.getenv("TELEGRAM_CHANNEL_ID")
 API_URL = "https://akafoe.studylife.org/api/meal-plans/today?canteen_id=a0f40678-5e86-4ae4-9ff1-ae1e9e25934b"
 
 MENSA_URL = "https://www.akafoe.de/essen/mensen-und-cafeterien/speiseplan/a0f40678-5e86-4ae4-9ff1-ae1e9e25934b"
-SUCHWORT = "kaiserschmarrn"
+SUCHWORT = "basmatireis"
 
 
 def check_mensa_for_schmarrn():
@@ -90,4 +90,5 @@ if __name__ == "__main__":
         if BOT_TOKEN == "DEIN_BOT_TOKEN_HIER" or CHANNEL_ID == "DEINE_KANAL_ID_HIER":
             print("⚠️ ACHTUNG: Bot-Token oder Kanal-ID fehlen! Kann keine Nachricht senden.")
         else:
+
             send_telegram_alert()
