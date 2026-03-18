@@ -5,51 +5,191 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schmarrn-O-Meter | RUB</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #f4f4f9; padding: 50px; color: #333; }
-        h1 { color: #e67e22; font-size: 3em; margin-bottom: 10px; }
-        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .button { display: inline-block; background-color: #0088cc; color: white; padding: 15px 30px; text-decoration: none; font-size: 1.2em; border-radius: 8px; margin-top: 20px; font-weight: bold; transition: background 0.3s; }
-        .button:hover { background-color: #0077b3; }
-        .emoji { font-size: 4em; margin-bottom: -10px; }
+        :root {
+            --primary: #e67e22;
+            --primary-hover: #d35400;
+            --secondary: #0088cc;
+            --bg: #f0f2f5;
+            --text: #2c3e50;
+        }
+
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: var(--bg); 
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Hintergrund-Animation Layer */
+        #particles-js {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            width: 90%;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-area { font-size: 60px; margin-bottom: 10px; filter: drop-shadow(0 5px 15px rgba(230, 126, 34, 0.3)); }
+
+        h1 { font-size: 2.2em; margin: 0; color: var(--text); letter-spacing: -1px; }
+        .subtitle { color: var(--primary); font-weight: 600; text-transform: uppercase; font-size: 0.9em; letter-spacing: 1px; margin-bottom: 20px; }
+
+        .description { line-height: 1.6; color: #5f6c7b; margin-bottom: 30px; }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 16px 28px;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0, 136, 204, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0, 136, 204, 0.3);
+            background: #0077b3;
+        }
+
+        .history-section {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .history-title {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-list { list-style: none; padding: 0; margin: 0; max-height: 200px; overflow-y: auto; }
+        
+        .history-item {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .history-item:hover { border-color: var(--primary); transform: translateX(5px); }
+        .history-date { font-weight: 600; font-size: 0.95em; }
+        .badge { background: #fff1e2; color: var(--primary); padding: 4px 8px; border-radius: 6px; font-size: 0.75em; font-weight: 800; }
+
+        .no-data { text-align: center; padding: 20px; color: #94a3b8; font-size: 0.9em; border: 2px dashed #e2e8f0; border-radius: 12px; }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="emoji">🥞🚨</div>
+
+    <div id="particles-js"></div>
+
+    <div class="card">
+        <div class="logo-area">🥞</div>
+        <div class="subtitle">Live aus der Mensa</div>
         <h1>Schmarrn-O-Meter</h1>
-        <h3>Der Kaiserschmarrn-Alarm für die RUB Mensa</h3>
-        <p>Nie wieder das beste Gericht der Mensa verpassen! Mein Bot checkt jeden Morgen den Speiseplan der Mensa.</p>
-        <p>Sobald es Kaiserschmarrn gibt, bekommst du sofort morgens eine Push-Nachricht auf dein Handy.</p>
+        <p class="description">Der smarte Push-Alarm für die RUB. Verpasse nie wieder den legendären Kaiserschmarrn im AKAFÖ.</p>
         
-        <a href="https://t.me/+4A4DZ6n3wCQzZmVi" class="button" target="_blank">
-            🔔 Jetzt auf Telegram abonnieren
+        <a href="https://t.me/DEIN_KANAL_LINK" class="btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+            Telegram Kanal beitreten
         </a>
+
+        <div class="history-section">
+            <div class="history-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                LETZTE ALARME
+            </div>
+            <div id="history-container">
+                <ul class="history-list" id="history-list">
+                    </ul>
+            </div>
+        </div>
     </div>
-    <div class="history-container" style="margin-top: 40px; text-align: left; background: #f9f9f9; padding: 20px; border-radius: 10px;">
-    <h3 style="margin-top: 0;">📜 Letzte Schmarrn-Tage:</h3>
-    <ul id="history-list" style="list-style-type: none; padding-left: 0; font-size: 1.1em; line-height: 1.6;">
-        <li>Lade Historie...</li>
-    </ul>
-    </div>
+
     <script>
-        // Holt sich die Datei im Hintergrund
-        fetch('history.json')
-            .then(response => {
-                if (!response.ok) throw new Error("Keine Historie gefunden");
-                return response.json();
-            })
-            .then(daten => {
-                const liste = document.getElementById('history-list');
-                liste.innerHTML = ''; // Lade-Text entfernen
+        // 1. Historie laden
+        async function loadHistory() {
+            const list = document.getElementById('history-list');
+            try {
+                const res = await fetch('history.json?t=' + Date.now());
+                const data = await res.json();
                 
-                // Jedes Datum aus der Datei in die Liste einfügen
-                daten.forEach(datum => {
-                    liste.innerHTML += `<li>🥞 ${datum}</li>`;
-                });
-            })
-            .catch(fehler => {
-                document.getElementById('history-list').innerHTML = '<li>Bisher noch keine Alarme aufgezeichnet! 😢</li>';
-            });
+                if (!data || data.length === 0) throw new Error();
+
+                list.innerHTML = data.map(date => `
+                    <li class="history-item">
+                        <span class="history-date">${date}</span>
+                        <span class="badge">AKTIV</span>
+                    </li>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = '<div class="no-data">Noch keine Daten verfügbar.<br>Der Bot wartet auf den nächsten Schmarrn!</div>';
+            }
+        }
+
+        // 2. Schmarrn-Regen (Dekoration)
+        function createSchmarrn() {
+            const emoji = ['🥞', '✨', '🔥'][Math.floor(Math.random() * 3)];
+            const el = document.createElement('div');
+            el.innerHTML = emoji;
+            el.style.position = 'fixed';
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.top = '-50px';
+            el.style.fontSize = Math.random() * 20 + 20 + 'px';
+            el.style.zIndex = '-1';
+            el.style.opacity = '0.4';
+            el.style.transition = 'transform 5s linear, opacity 5s';
+            document.body.appendChild(el);
+
+            setTimeout(() => {
+                el.style.transform = `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`;
+                el.style.opacity = '0';
+            }, 100);
+
+            setTimeout(() => el.remove(), 6000);
+        }
+
+        // Start
+        loadHistory();
+        setInterval(createSchmarrn, 2000); // Alle 2 Sek ein neuer Schmarrn
+        for(let i=0; i<5; i++) setTimeout(createSchmarrn, i * 300); // Start-Salbe
     </script>
 </body>
 </html>
