@@ -52,6 +52,29 @@ def check_mensa_for_schmarrn():
         print(f"⚠️ Unerwarteter Fehler bei der API-Abfrage: {e}")
         return False
 
+def update_history():
+    """Liest die alte Historie, fügt das heutige Datum hinzu und speichert sie."""
+    history_file = "history.json"
+    heute = datetime.now().strftime('%d.%m.%Y')
+    historie = []
+
+    # 1. Alte Daten laden (falls die Datei schon existiert)
+    if os.path.exists(history_file):
+        with open(history_file, "r", encoding="utf-8") as file:
+            try:
+                historie = json.load(file)
+            except json.JSONDecodeError:
+                pass # Falls die Datei leer oder kaputt ist, starten wir mit einer leeren Liste
+
+    # 2. Datum hinzufügen (aber nur, wenn es heute nicht schon eingetragen wurde)
+    if heute not in historie:
+        historie.insert(0, heute) # insert(0) packt das neueste Datum ganz nach oben!
+
+    # 3. Datei wieder speichern
+    with open(history_file, "w", encoding="utf-8") as file:
+        json.dump(historie, file, indent=4)
+    
+    print(f"📁 Historie aktualisiert: {heute} hinzugefügt.")
 
 def send_telegram_alert():
     """Sendet die Push-Nachricht in den Telegram-Kanal."""
@@ -86,10 +109,10 @@ if __name__ == "__main__":
 
     # 2. Wenn ja, Alarm auslösen!
     if gibt_es_schmarrn:
+        update_history()
         # Sicherheitscheck: Verhindert Absturz, falls du vergessen hast, die Tokens einzutragen
         if BOT_TOKEN == "DEIN_BOT_TOKEN_HIER" or CHANNEL_ID == "DEINE_KANAL_ID_HIER":
             print("⚠️ ACHTUNG: Bot-Token oder Kanal-ID fehlen! Kann keine Nachricht senden.")
         else:
-
             send_telegram_alert()
 
