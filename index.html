@@ -25,5 +25,31 @@
             🔔 Jetzt auf Telegram abonnieren
         </a>
     </div>
+    <div class="history-container" style="margin-top: 40px; text-align: left; background: #f9f9f9; padding: 20px; border-radius: 10px;">
+    <h3 style="margin-top: 0;">📜 Letzte Schmarrn-Tage:</h3>
+    <ul id="history-list" style="list-style-type: none; padding-left: 0; font-size: 1.1em; line-height: 1.6;">
+        <li>Lade Historie...</li>
+    </ul>
+    </div>
+    <script>
+        // Holt sich die Datei im Hintergrund
+        fetch('history.json')
+            .then(response => {
+                if (!response.ok) throw new Error("Keine Historie gefunden");
+                return response.json();
+            })
+            .then(daten => {
+                const liste = document.getElementById('history-list');
+                liste.innerHTML = ''; // Lade-Text entfernen
+                
+                // Jedes Datum aus der Datei in die Liste einfügen
+                daten.forEach(datum => {
+                    liste.innerHTML += `<li>🥞 ${datum}</li>`;
+                });
+            })
+            .catch(fehler => {
+                document.getElementById('history-list').innerHTML = '<li>Bisher noch keine Alarme aufgezeichnet! 😢</li>';
+            });
+    </script>
 </body>
 </html>
