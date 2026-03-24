@@ -11,6 +11,8 @@
             --secondary: #0088cc;
             --bg: #f0f2f5;
             --text: #2c3e50;
+            --red: #e74c3c;
+            --green: #2ecc71;
         }
 
         body { 
@@ -25,7 +27,6 @@
             overflow-x: hidden;
         }
 
-        /* Hintergrund-Animation Layer */
         #particles-js {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -34,7 +35,7 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             max-width: 500px;
             width: 90%;
@@ -42,8 +43,9 @@
             border-radius: 24px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.4);
             animation: fadeIn 0.8s ease-out;
+            margin: 40px 0;
         }
 
         @keyframes fadeIn {
@@ -52,66 +54,90 @@
         }
 
         .logo-area { font-size: 60px; margin-bottom: 10px; filter: drop-shadow(0 5px 15px rgba(230, 126, 34, 0.3)); }
-
         h1 { font-size: 2.2em; margin: 0; color: var(--text); letter-spacing: -1px; }
         .subtitle { color: var(--primary); font-weight: 600; text-transform: uppercase; font-size: 0.9em; letter-spacing: 1px; margin-bottom: 20px; }
+        .description { line-height: 1.6; color: #5f6c7b; margin-bottom: 25px; }
 
-        .description { line-height: 1.6; color: #5f6c7b; margin-bottom: 30px; }
+        /* --- NEU: Dashboard Area (Ampel & Zähler) --- */
+        .dashboard {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-        .btn {
+        .status-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            background: var(--secondary);
-            color: white;
-            padding: 16px 28px;
-            text-decoration: none;
-            border-radius: 14px;
+            gap: 12px;
+            font-size: 1.2em;
             font-weight: 700;
+        }
+
+        /* Die glühende Ampel */
+        .ampel {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: #ccc; /* Standard Grau */
+            transition: all 0.5s;
+        }
+        .ampel.red {
+            background-color: var(--red);
+            box-shadow: 0 0 15px var(--red);
+        }
+        .ampel.green {
+            background-color: var(--green);
+            box-shadow: 0 0 20px var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px var(--green); }
+            50% { box-shadow: 0 0 25px var(--green), 0 0 40px var(--green); }
+            100% { box-shadow: 0 0 10px var(--green); }
+        }
+
+        .counter-box {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 0.9em;
+            color: #64748b;
+        }
+        .counter-number {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--text);
+            display: block;
+            margin-bottom: 2px;
+        }
+        /* ------------------------------------------- */
+
+        .btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: var(--secondary); color: white; padding: 16px 28px;
+            text-decoration: none; border-radius: 14px; font-weight: 700;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 10px 20px rgba(0, 136, 204, 0.2);
         }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(0, 136, 204, 0.3); background: #0077b3; }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(0, 136, 204, 0.3);
-            background: #0077b3;
-        }
-
-        .history-section {
-            margin-top: 40px;
-            text-align: left;
-        }
-
-        .history-title {
-            font-size: 0.9em;
-            font-weight: 700;
-            color: #94a3b8;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
+        .history-section { margin-top: 40px; text-align: left; }
+        .history-title { font-size: 0.9em; font-weight: 700; color: #94a3b8; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         .history-list { list-style: none; padding: 0; margin: 0; max-height: 200px; overflow-y: auto; }
         
-        .history-item {
-            background: white;
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s;
-        }
-
+        .history-item { background: white; padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; transition: all 0.2s; }
         .history-item:hover { border-color: var(--primary); transform: translateX(5px); }
         .history-date { font-weight: 600; font-size: 0.95em; }
-        .badge { background: #fff1e2; color: var(--primary); padding: 4px 8px; border-radius: 6px; font-size: 0.75em; font-weight: 800; }
-
+        .badge { background: #e2e8f0; color: #64748b; padding: 4px 8px; border-radius: 6px; font-size: 0.75em; font-weight: 800; }
+        .badge.active { background: #fff1e2; color: var(--primary); }
         .no-data { text-align: center; padding: 20px; color: #94a3b8; font-size: 0.9em; border: 2px dashed #e2e8f0; border-radius: 12px; }
 
     </style>
@@ -124,7 +150,18 @@
         <div class="logo-area">🥞</div>
         <div class="subtitle">Live aus der Mensa</div>
         <h1>Schmarrn-O-Meter</h1>
-        <p class="description">Der smarte Push-Alarm für die RUB-Mensa. Verpasse nie wieder das beste Gericht überhaupt - den Kaiserschmarrn.</p>
+        <p class="description">Der smarte Push-Alarm für die RUB. Verpasse nie wieder den legendären Kaiserschmarrn im AKAFÖ.</p>
+        
+        <div class="dashboard">
+            <div class="status-row">
+                <div class="ampel" id="status-ampel"></div>
+                <span id="status-text">Lade Status...</span>
+            </div>
+            <div class="counter-box">
+                <span class="counter-number" id="counter-number">?</span>
+                <span id="counter-label">Tage seit dem letzten Schmarrn</span>
+            </div>
+        </div>
         
         <a href="https://t.me/DEIN_KANAL_LINK" class="btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
@@ -144,29 +181,83 @@
     </div>
 
     <script>
-        // 1. Historie laden
-        async function loadHistory() {
+        // Hilfsfunktion: Wandelt "DD.MM.YYYY" in ein echtes JS-Datum um
+        function parseGermanDate(dateString) {
+            const parts = dateString.split('.');
+            // Achtung: Monate in JS fangen bei 0 an (Januar = 0)
+            return new Date(parts[2], parts[1] - 1, parts[0]);
+        }
+
+        async function loadDashboard() {
             const list = document.getElementById('history-list');
+            const ampel = document.getElementById('status-ampel');
+            const statusText = document.getElementById('status-text');
+            const counterNumber = document.getElementById('counter-number');
+            const counterLabel = document.getElementById('counter-label');
+
             try {
                 const res = await fetch('history.json?t=' + Date.now());
                 const data = await res.json();
                 
-                if (!data || data.length === 0) throw new Error();
+                if (!data || data.length === 0) throw new Error("Empty");
 
-                list.innerHTML = data.map(date => `
+                // 1. Historie aufbauen
+                list.innerHTML = data.map((date, index) => {
+                    // Nur der allererste Eintrag bekommt das Highlight-Badge
+                    const badgeClass = index === 0 ? 'badge active' : 'badge';
+                    const badgeText = index === 0 ? 'NEUESTE' : 'HISTORIE';
+                    return `
                     <li class="history-item">
                         <span class="history-date">${date}</span>
-                        <span class="badge">AKTIV</span>
+                        <span class="${badgeClass}">${badgeText}</span>
                     </li>
-                `).join('');
+                `}).join('');
+
+                // 2. Datum berechnen für Ampel & Zähler
+                const lastDateString = data[0];
+                const lastDate = parseGermanDate(lastDateString);
+                
+                // Heutiges Datum nehmen und Uhrzeit auf 00:00 setzen (für sauberen Vergleich)
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                lastDate.setHours(0, 0, 0, 0);
+
+                // Differenz in Tagen berechnen
+                const diffTime = Math.abs(today - lastDate);
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays === 0) {
+                    // HEUTE GIBT ES SCHMARRN!
+                    ampel.className = 'ampel green';
+                    statusText.innerText = "ALARM: Heute gibt's Schmarrn!";
+                    statusText.style.color = 'var(--green)';
+                    counterNumber.innerText = "HEUTE";
+                    counterLabel.innerText = "Renn in die Mensa!";
+                    
+                    // Extra viele fallende Schmarrns
+                    for(let i=0; i<15; i++) setTimeout(createSchmarrn, i * 200);
+                } else {
+                    // KEIN SCHMARRN HEUTE
+                    ampel.className = 'ampel red';
+                    statusText.innerText = "Heute leider kein Schmarrn.";
+                    statusText.style.color = 'var(--red)';
+                    counterNumber.innerText = diffDays;
+                    counterLabel.innerText = diffDays === 1 ? "Tag seit dem letzten Schmarrn" : "Tage seit dem letzten Schmarrn";
+                }
+
             } catch (e) {
-                list.innerHTML = '<div class="no-data">Noch keine Daten verfügbar.<br>Der Bot wartet auf den nächsten Schmarrn!</div>';
+                // Falls noch keine Datei da ist
+                list.innerHTML = '<div class="no-data">Der Bot sammelt noch Daten...</div>';
+                ampel.className = 'ampel';
+                statusText.innerText = "Status unbekannt";
+                counterNumber.innerText = "⏳";
+                counterLabel.innerText = "Warte auf den ersten Scan";
             }
         }
 
-        // 2. Schmarrn-Regen (Dekoration)
+        // Schmarrn-Regen (Dekoration)
         function createSchmarrn() {
-            const emoji = ['🥞', '✨', '🔥'][Math.floor(Math.random() * 3)];
+            const emoji = ['🥞', '✨', '🍴'][Math.floor(Math.random() * 3)];
             const el = document.createElement('div');
             el.innerHTML = emoji;
             el.style.position = 'fixed';
@@ -186,10 +277,9 @@
             setTimeout(() => el.remove(), 6000);
         }
 
-        // Start
-        loadHistory();
-        setInterval(createSchmarrn, 2000); // Alle 2 Sek ein neuer Schmarrn
-        for(let i=0; i<5; i++) setTimeout(createSchmarrn, i * 300); // Start-Salbe
+        // Init
+        loadDashboard();
+        setInterval(createSchmarrn, 3000); 
     </script>
 </body>
 </html>
