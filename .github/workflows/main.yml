@@ -3,7 +3,8 @@ name: Kaiserschmarrn Alarm
 on:
   schedule:
     # Führt das Skript jeden Montag bis Freitag um 06:00 UTC aus (entspricht ca. 07:00 / 08:00 Uhr in Deutschland)
-    - cron: '0 6 * * 1-5'
+    - cron: '0 7 * * 1-5'
+      timezone: 'Europe/Berlin'
   workflow_dispatch: # Das ist ein magischer Schalter, mit dem du das Skript zum Testen manuell per Knopfdruck starten kannst!
 
 jobs:
